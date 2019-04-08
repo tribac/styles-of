@@ -1,12 +1,10 @@
 # styles-of
 
-Ease the adoption of `CSS Modules` inside `create-react-app`s.
+Ease the adoption of `CSS Modules` inside `create-react-app` https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet
 
-(https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet)
+Documentations of `CSS Modules` talk about how we must use `className`s in `camelCase` https://github.com/gajus/react-css-modules, unless using `styleName` as provided by `babel` plugin https://github.com/gajus/babel-plugin-react-css-modules.
 
-Documentations of `CSS Modules` talk about how we must use `className`s in `camelCase` (https://github.com/gajus/react-css-modules) unless using `styleName` as provided by `babel` (https://github.com/gajus/babel-plugin-react-css-modules).
-
-But with `styles-of` (just a simple helper function), it is easy to support any CSS `className`s, and by the same token make use of multiple `className`s & conditional formatting of `className`s a breeze, or at least as painless as possible.
+But with `styles-of` (just a simple helper function really), it is easy to support any CSS `className`s, and by the same token make use of multiple `className`s & conditional formatting of `className`s a breeze, or at least as painless as possible.
 
 Let's use the same `CSS Modules` example as the one used in both links above:
 
@@ -92,7 +90,7 @@ With `styles-of`:
 ```javascript
       <div className={styles.table}>
       {rows.map((row, index) => (
-        <div className={_of(['row', (index ? '' : 'first')])}>
+        <div className={_of('row', index ? '' : 'first')}>
           {...}
         </div>
       )}
@@ -173,4 +171,52 @@ export default class Table extends React.Component {
     );
   }
 }
+```
+
+# Reference
+
+## Two call styles
+
+`styles-of` supports 2 different call styles:
+
+- currying:
+
+```javascript
+stylesOf(styles)('classA classB');
+```
+
+- direct:
+
+```javascript
+stylesOf(styles, 'classA classB');
+```
+
+It is presumed that the currying call style is the preferred way so it is slightly more optimized.
+
+## Three argument types
+
+For each call style, 3 different argument types are supported:
+
+- one space delimited string:
+
+```javascript
+stylesOf(styles)('classA classB'); // currying
+
+stylesOf(styles, 'classA classB'); // direct
+```
+
+- one array of strings:
+
+```javascript
+stylesOf(styles)(['classA', 'classB']); // currying
+
+stylesOf(styles, ['classA', 'classB']); // direct
+```
+
+- variable string arguments:
+
+```javascript
+stylesOf(styles)('classA', 'classB'); // currying
+
+stylesOf(styles, 'classA', 'classB'); // direct
 ```
